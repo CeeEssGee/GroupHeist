@@ -96,7 +96,15 @@ namespace GroupHeist
                 {
                     IRobber robber = rolodex[i];
                     // if totalPercentageCut() + robber.PercentageCut <= 100, show robber info                  
-                    System.Console.WriteLine($"\t{i + 1}) {robber.Name}\n\tSpecialist: {robber.Specialist}\n\tSkill Level: {robber.SkillLevel}\n\tPercentage Cut: {robber.PercentageCut}\n");
+                    int totalPercentageGiven = totalPercentageCut();
+                    foreach (IRobber r in crew)
+                    {
+                        // I don't know why this has to be here, but it doesn't work without it
+                    }
+                    if ((totalPercentageGiven + rolodex[i].PercentageCut <= 100))
+                    {
+                        System.Console.WriteLine($"\t{i + 1}) {robber.Name}\n\tSpecialist: {robber.Specialist}\n\tSkill Level: {robber.SkillLevel}\n\tPercentage Cut: {robber.PercentageCut}\n");
+                    }
 
 
                 }
