@@ -8,8 +8,10 @@ namespace GroupHeist
     {
         static void Main(string[] args)
         {
+            List<IRobber> crew = new List<IRobber>();
+
             Hacker Adam = new Hacker("Adam", 50, 15);
-            Hacker Sergey = new Hacker("Sergey", 30, 15);
+            Hacker Sergey = new Hacker("Sergey", 30, 90);
             Muscle Cullen = new Muscle("Cullen", 25, 15);
             Muscle Ace = new Muscle("Ace", 30, 15);
             LockSpecialist Courtney = new LockSpecialist("Courtney", 50, 15);
@@ -74,8 +76,7 @@ namespace GroupHeist
             Scores.Add("Vault Score", theVaultScore);
             Scores.Add("Security Guard Score", theSecurityGuardScore);
 
-            // System.Console.WriteLine($"Alarm Score = {theAlarmScore}\nVault ={theVaultScore}\nSecurity = {theSecurityGuardScore}");
-
+            // System.Console.WriteLine($"Alarm Score = {theAlarmScore}\nVault Score ={theVaultScore}\nSecurity Guard Score = {theSecurityGuardScore}");
 
             var maxValueKey = Scores.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
 
@@ -85,15 +86,69 @@ namespace GroupHeist
 
             Console.WriteLine($"Least Secure: {minValueKey}");
 
+            CrewSelection();
 
-            System.Console.WriteLine($"Select your crew:");
-            for (int i = 1; i < rolodex.Count; i++)
+            void CrewSelection()
             {
-                IRobber robber = rolodex[i];
-                System.Console.WriteLine($"\t{i}) {robber.Name}\n\tSpecialist: {robber.Specialist}\n\tSkill Level: {robber.SkillLevel}\n\tPercentage Cut: {robber.PercentageCut}\n");
+
+                System.Console.WriteLine($"Select your crew:");
+                for (int i = 0; i < rolodex.Count; i++)
+                {
+                    IRobber robber = rolodex[i];
+                    // if totalPercentageCut() + robber.PercentageCut <= 100, show robber info                  
+                    System.Console.WriteLine($"\t{i + 1}) {robber.Name}\n\tSpecialist: {robber.Specialist}\n\tSkill Level: {robber.SkillLevel}\n\tPercentage Cut: {robber.PercentageCut}\n");
+
+
+                }
+
+                System.Console.WriteLine($"The total percentage cut is {totalPercentageCut()}");
+                System.Console.WriteLine("Select the number for the member you want to add to your crew.");
+                string selectedCrewString = Console.ReadLine();
+
+                if (selectedCrewString == "")
+                {
+                    return;
+                }
+                int selectedCrew = int.Parse(selectedCrewString);
+
+                if (selectedCrew >= 0 && selectedCrew < rolodex.Count)
+                {
+                    System.Console.WriteLine(rolodex[selectedCrew - 1].Name);
+                }
+
+                crew.Add(rolodex[selectedCrew - 1]);
+                rolodex.RemoveAt(selectedCrew - 1);
+                System.Console.WriteLine($"The total percentage cut is {totalPercentageCut()}");
+
+
+                addAnotherCrewMember();
 
             }
 
+            void addAnotherCrewMember()
+            {
+                CrewSelection();
+            }
+
+            int totalPercentageCut()
+            {
+
+                int totalPercentageCut = 0;
+                {
+                    foreach (IRobber member in crew)
+                    {
+                        totalPercentageCut += member.PercentageCut;
+                    }
+                }
+
+                // System.Console.WriteLine($"Total Percentage Cut: {totalPercentageCut}");
+                return totalPercentageCut;
+            }
         }
+
+
+
+
     }
 }
+
