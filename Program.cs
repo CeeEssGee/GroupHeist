@@ -162,7 +162,10 @@ namespace GroupHeist
                     System.Console.WriteLine($"You robbed the bank and walked away with ${theBank.CashOnHand}");
                     foreach (IRobber member in crew)
                     {
-                        System.Console.WriteLine($"{member.Name} walked away with ({member.PercentageCut} * ({theBank.CashOnHand / 100})).");
+                        int memberCut = member.PercentageCut * (theBank.CashOnHand / 100);
+
+                        System.Console.WriteLine($"{member.Name} walked away with ${memberCut}.");
+
                     }
                 }
                 else
