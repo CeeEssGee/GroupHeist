@@ -167,6 +167,13 @@ namespace GroupHeist
                         System.Console.WriteLine($"{member.Name} walked away with ${memberCut}.");
 
                     }
+                    if (totalPercentageCut() < 100)
+                    {
+                        int yourCut = ((100 - totalPercentageCut()) * (theBank.CashOnHand / 100));
+
+                        System.Console.WriteLine($"And you (the brains behind the operation) take ${yourCut}.");
+                    }
+
                 }
                 else
                 {
