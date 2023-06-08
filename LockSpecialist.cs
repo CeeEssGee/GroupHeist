@@ -17,7 +17,7 @@ namespace GroupHeist
             System.Console.WriteLine($"{this.Name} is hacking the vault. Decreased vault score by {this.SkillLevel} points.");
             if (bank.VaultScore <= 0)
             {
-                System.Console.WriteLine($"{this.Name} has disabled the alarm system!");
+                System.Console.WriteLine($"{this.Name} has opened the vault!");
             }
 
         }

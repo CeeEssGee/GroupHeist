@@ -11,9 +11,9 @@ namespace GroupHeist
             List<IRobber> crew = new List<IRobber>();
 
             Hacker Adam = new Hacker("Adam", 50, 15);
-            Hacker Sergey = new Hacker("Sergey", 30, 90);
-            Muscle Cullen = new Muscle("Cullen", 25, 15);
-            Muscle Ace = new Muscle("Ace", 30, 15);
+            Hacker Sergey = new Hacker("Sergey", 40, 15);
+            Muscle Cullen = new Muscle("Cullen", 40, 15);
+            Muscle Ace = new Muscle("Ace", 40, 15);
             LockSpecialist Courtney = new LockSpecialist("Courtney", 50, 15);
 
             List<IRobber> rolodex = new List<IRobber>() { Adam, Sergey, Cullen, Ace, Courtney };
@@ -148,11 +148,42 @@ namespace GroupHeist
                 // System.Console.WriteLine($"Total Percentage Cut: {totalPercentageCut}");
                 return totalPercentageCut;
             }
+
+            void runHeist()
+            {
+
+                foreach (IRobber member in crew)
+                {
+                    member.PerformSkill(theBank);
+                }
+
+                if (theBank.AlarmScore + theBank.VaultScore + theBank.SecurityGuardScore <= 0)
+                {
+                    System.Console.WriteLine($"You robbed the bank and walked away with ${theBank.CashOnHand}");
+                    foreach (IRobber member in crew)
+                    {
+                        System.Console.WriteLine($"{member.Name} walked away with ({member.PercentageCut} * ({theBank.CashOnHand / 100})).");
+                    }
+                }
+                else
+                {
+                    System.Console.WriteLine($"Go directly to jail - do not past go, do not collect $200");
+                }
+            }
+            runHeist();
+
+
         }
 
 
 
 
+
     }
+
+
+
+
 }
+
 
